@@ -1,8 +1,7 @@
 Package: com.neinzedd9.lastlocked
 Name: LastLocked
 Depends: mobilesubstrate
-Version: 1.0.1
-Pre-Depends: firmware (>= 10.0)
+Version: 1.0.2
 Architecture: iphoneos-arm
 Description: Replaces "Press home" text with "Locked ... ago"
 Maintainer: NeinZedd9
