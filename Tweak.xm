@@ -35,6 +35,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
   NSString *formattedString = @"LastLocked: Language not supported.";
 
+	NSLog(@"NZ9: %@", language);
   if([language isEqualToString: @"nl"]) { // Dutch format
     formattedString = @"Vergrendeld"; // Begin formatting string
 
@@ -282,7 +283,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
   	formattedString = [formattedString stringByAppendingFormat: @" önce kilitlendi"]; // Append "ago" to the string
   }
-	else if([language isEqualToString: @"nl"]) { // French format
+	else if([language isEqualToString: @"fr"]) { // French format
     formattedString = @"Verrouillé depuis"; // Begin formatting string
 
   	// Do all of the formatting stuff by appending the string
@@ -324,7 +325,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   	else
   		formattedString = [formattedString stringByAppendingFormat: @" %ld secondes", (long)secondCount];
   }
-	else if([language isEqualToString: @"nl"]) { // German format
+	else if([language isEqualToString: @"de"]) { // German format
     formattedString = @"Gesperrt vor"; // Begin formatting string
 
   	// Do all of the formatting stuff by appending the string
@@ -365,6 +366,45 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   		formattedString = [formattedString stringByAppendingFormat: @" %ld Sekunde", (long)secondCount];
   	else
   		formattedString = [formattedString stringByAppendingFormat: @" %ld Sekunden", (long)secondCount];
+  }
+	else if([language isEqualToString: @"es"]) { // Spanish format
+    formattedString = @"Bloqueado hace"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld año", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld años", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mes", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld meses", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld día", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld días", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld hora", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld horas", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld min", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mins", (long)minuteCount];
+  	}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld seg", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld segs", (long)secondCount];
   }
   else { // English format (default)
     formattedString = @"Locked"; // Begin formatting string
