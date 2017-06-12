@@ -149,6 +149,9 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   		else
   			formattedString = [formattedString stringByAppendingFormat: @" %ld min", (long)minuteCount];
   	}
+		if(yearCount > 0 || monthCount > 0 || dayCount > 0 || hourCount > 0 || minuteCount > 0) {
+			formattedString = [formattedString stringByAppendingFormat: @" och"];
+		}
   	if(secondCount == 0 || secondCount == 1)
   		formattedString = [formattedString stringByAppendingFormat: @" %ld sek", (long)secondCount];
   	else
@@ -278,6 +281,90 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   		formattedString = [formattedString stringByAppendingFormat: @" %ld saniye", (long)secondCount];
 
   	formattedString = [formattedString stringByAppendingFormat: @" önce kilitlendi"]; // Append "ago" to the string
+  }
+	else if([language isEqualToString: @"nl"]) { // French format
+    formattedString = @"Verrouillé depuis"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld an", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld ans", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mois", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mois", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld jour", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld jours", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld heure", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld heures", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld minute", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld minutes", (long)minuteCount];
+  	}
+		if(yearCount > 0 || monthCount > 0 || dayCount > 0 || hourCount > 0 || minuteCount > 0) {
+			formattedString = [formattedString stringByAppendingFormat: @" et"];
+		}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld seconde", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld secondes", (long)secondCount];
+  }
+	else if([language isEqualToString: @"nl"]) { // German format
+    formattedString = @"Gesperrt vor"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Jahr", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Jahren", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Monat", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Monaten", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Tag", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Tagen", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Stunde", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Stunden", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Minute", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld Minuten", (long)minuteCount];
+  	}
+		if(yearCount > 0 || monthCount > 0 || dayCount > 0 || hourCount > 0 || minuteCount > 0) {
+			formattedString = [formattedString stringByAppendingFormat: @" und"];
+		}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld Sekunde", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld Sekunden", (long)secondCount];
   }
   else { // English format (default)
     formattedString = @"Locked"; // Begin formatting string
