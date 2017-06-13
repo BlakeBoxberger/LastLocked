@@ -224,19 +224,19 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   		if(dayCount == 1)
   			formattedString = [formattedString stringByAppendingFormat: @" %@ يوم", [formatter stringFromNumber:@(dayCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %@ روز أيام", [formatter stringFromNumber:@(dayCount)]];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ أيام", [formatter stringFromNumber:@(dayCount)]];
   	}
   	if(hourCount > 0) {
   		if(hourCount == 1)
   			formattedString = [formattedString stringByAppendingFormat: @" %@ ساعة", [formatter stringFromNumber:@(hourCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %@ ساعت ساعات", [formatter stringFromNumber:@(hourCount)]];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ ساعات", [formatter stringFromNumber:@(hourCount)]];
   	}
   	if(minuteCount > 0) {
   		if(minuteCount == 1)
   			formattedString = [formattedString stringByAppendingFormat: @" %@ دقيقة", [formatter stringFromNumber:@(minuteCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %@ دقیقه دقائق", [formatter stringFromNumber:@(minuteCount)]];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ دقائق", [formatter stringFromNumber:@(minuteCount)]];
   	}
   	if(secondCount == 0 || secondCount == 1)
   		formattedString = [formattedString stringByAppendingFormat: @" %@ ثانية", [formatter stringFromNumber:@(secondCount)]];
