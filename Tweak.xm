@@ -239,9 +239,9 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   			formattedString = [formattedString stringByAppendingFormat: @" %@ دقیقه دقائق", [formatter stringFromNumber:@(minuteCount)]];
   	}
   	if(secondCount == 0 || secondCount == 1)
-  		formattedString = [formattedString stringByAppendingFormat: @" %@ ثواني", [formatter stringFromNumber:@(secondCount)]];
-  	else
   		formattedString = [formattedString stringByAppendingFormat: @" %@ ثانية", [formatter stringFromNumber:@(secondCount)]];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %@ ثواني", [formatter stringFromNumber:@(secondCount)]];
 
   }
   else if([language isEqualToString: @"tr"]) { // Turkish format
@@ -610,7 +610,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 - (void)loadView {
 	%orig; // Call original "loadView" method
-  lastLocked = [[NSDate dateWithTimeIntervalSinceNow:-50000000] retain]; // Set the lastLocked NSDate to the current date
+  lastLocked = [[NSDate dateWithTimeIntervalSinceNow: -50000] retain]; // Set the lastLocked NSDate to the current date
   if([dontationAlertSettings integerForKey: @"unlockCount"] == 15) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enjoying my tweak, LastLocked?" message:@"Please consider donating so I can continue to develop tweaks like this! -NeinZedd9 <3" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Donate", nil];
     [alert show];
