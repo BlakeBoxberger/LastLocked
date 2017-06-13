@@ -610,7 +610,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 - (void)loadView {
 	%orig; // Call original "loadView" method
-  lastLocked = [[NSDate dateWithTimeIntervalSinceNow: -50000] retain]; // Set the lastLocked NSDate to the current date
+  lastLocked = [[NSDate date] retain]; // Set the lastLocked NSDate to the current date
   if([dontationAlertSettings integerForKey: @"unlockCount"] == 15) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enjoying my tweak, LastLocked?" message:@"Please consider donating so I can continue to develop tweaks like this! -NeinZedd9 <3" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Donate", nil];
     [alert show];
