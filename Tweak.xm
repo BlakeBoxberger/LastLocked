@@ -35,7 +35,6 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
   NSString *formattedString = @"LastLocked: Language not supported.";
 
-	NSLog(@"NZ9: %@", language);
   if([language isEqualToString: @"nl"]) { // Dutch format
     formattedString = @"Vergrendeld"; // Begin formatting string
 
@@ -202,45 +201,48 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   	formattedString = [formattedString stringByAppendingFormat: @" 前"]; // Append "ago" to the string
   }
   else if([language isEqualToString: @"ar"]) { // Arabic format
-    formattedString = @"قلف ‌شده بود"; // Begin formatting string
+    formattedString = @"مغلق منذ"; // Begin formatting string
+
+		NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+		NSLocale *arLocale = [[[NSLocale alloc] initWithLocaleIdentifier:@"ar"] autorelease];
+		[formatter setLocale:arLocale];
 
   	// Do all of the formatting stuff by appending the string
   	if(yearCount > 0) {
   		if(yearCount == 1)
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld سال", (long)yearCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ سنة", [formatter stringFromNumber:@(yearCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld سال ها", (long)yearCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ سنين", [formatter stringFromNumber:@(yearCount)]];
   	}
   	if(monthCount > 0) {
   		if(monthCount == 1)
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld ماه", (long)monthCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ شهر", [formatter stringFromNumber:@(monthCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld ماها", (long)monthCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ شهور", [formatter stringFromNumber:@(monthCount)]];
   	}
   	if(dayCount > 0) {
   		if(dayCount == 1)
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld روز", (long)dayCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ يوم", [formatter stringFromNumber:@(dayCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld روز ها", (long)dayCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ روز أيام", [formatter stringFromNumber:@(dayCount)]];
   	}
   	if(hourCount > 0) {
   		if(hourCount == 1)
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld ساعت", (long)hourCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ ساعة", [formatter stringFromNumber:@(hourCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld ساعت ها", (long)hourCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ ساعت ساعات", [formatter stringFromNumber:@(hourCount)]];
   	}
   	if(minuteCount > 0) {
   		if(minuteCount == 1)
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld دقیقه", (long)minuteCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ دقيقة", [formatter stringFromNumber:@(minuteCount)]];
   		else
-  			formattedString = [formattedString stringByAppendingFormat: @" %ld دقیقه ها", (long)minuteCount];
+  			formattedString = [formattedString stringByAppendingFormat: @" %@ دقیقه دقائق", [formatter stringFromNumber:@(minuteCount)]];
   	}
   	if(secondCount == 0 || secondCount == 1)
-  		formattedString = [formattedString stringByAppendingFormat: @" %ld ثانیه", (long)secondCount];
+  		formattedString = [formattedString stringByAppendingFormat: @" %@ ثواني", [formatter stringFromNumber:@(secondCount)]];
   	else
-  		formattedString = [formattedString stringByAppendingFormat: @" %ld ثانیه ها", (long)secondCount];
+  		formattedString = [formattedString stringByAppendingFormat: @" %@ ثانية", [formatter stringFromNumber:@(secondCount)]];
 
-  	formattedString = [formattedString stringByAppendingFormat: @" قبل"]; // Append "ago" to the string
   }
   else if([language isEqualToString: @"tr"]) { // Turkish format
     formattedString = @""; // Begin formatting string
@@ -406,6 +408,132 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   	else
   		formattedString = [formattedString stringByAppendingFormat: @" %ld segs", (long)secondCount];
   }
+	else if([language isEqualToString: @"pt"]) { // Portuguese format
+    formattedString = @"Bloqueado há"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld ano", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld anos", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mês", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld meses", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld dia", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld dias", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld hora", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld horas", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld min", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mins", (long)minuteCount];
+  	}
+		if(yearCount > 0 || monthCount > 0 || dayCount > 0 || hourCount > 0 || minuteCount > 0) {
+			formattedString = [formattedString stringByAppendingFormat: @" e"];
+		}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld seg", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld segs", (long)secondCount];
+
+  	formattedString = [formattedString stringByAppendingFormat: @" atrás"]; // Append "ago" to the string
+  }
+	else if([language isEqualToString: @"nb"]) { // Norwegian format
+    formattedString = @"Låst"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld år", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld år", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mnd", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld mnd", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld dag", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld dager", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld time", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld timer", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld min", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld min", (long)minuteCount];
+  	}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld sek", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld sek", (long)secondCount];
+
+  	formattedString = [formattedString stringByAppendingFormat: @" siden"]; // Append "ago" to the string
+  }
+	else if([language isEqualToString: @"zh"]) { // Chinese format
+    formattedString = @"已鎖定"; // Begin formatting string
+
+  	// Do all of the formatting stuff by appending the string
+  	if(yearCount > 0) {
+  		if(yearCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld年", (long)yearCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld年份", (long)yearCount];
+  	}
+  	if(monthCount > 0) {
+  		if(monthCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld月", (long)monthCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld個月", (long)monthCount];
+  	}
+  	if(dayCount > 0) {
+  		if(dayCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld天", (long)dayCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld天", (long)dayCount];
+  	}
+  	if(hourCount > 0) {
+  		if(hourCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld小時", (long)hourCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld小時", (long)hourCount];
+  	}
+  	if(minuteCount > 0) {
+  		if(minuteCount == 1)
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld分鐘", (long)minuteCount];
+  		else
+  			formattedString = [formattedString stringByAppendingFormat: @" %ld分鐘", (long)minuteCount];
+  	}
+  	if(secondCount == 0 || secondCount == 1)
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
+  	else
+  		formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
+
+  	formattedString = [formattedString stringByAppendingFormat: @" 前"]; // Append "ago" to the string
+  }
   else { // English format (default)
     formattedString = @"Locked"; // Begin formatting string
 
@@ -482,7 +610,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 - (void)loadView {
 	%orig; // Call original "loadView" method
-  lastLocked = [[NSDate date] retain]; // Set the lastLocked NSDate to the current date
+  lastLocked = [[NSDate dateWithTimeIntervalSinceNow:-50000000] retain]; // Set the lastLocked NSDate to the current date
   if([dontationAlertSettings integerForKey: @"unlockCount"] == 15) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enjoying my tweak, LastLocked?" message:@"Please consider donating so I can continue to develop tweaks like this! -NeinZedd9 <3" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Donate", nil];
     [alert show];
