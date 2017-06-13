@@ -493,8 +493,8 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
   	formattedString = [formattedString stringByAppendingFormat: @" siden"]; // Append "ago" to the string
   }
-	else if([language isEqualToString: @"zh"]) { // Chinese format
-    formattedString = @"已鎖定"; // Begin formatting string
+	else if([language isEqualToString: @"zh"]) { // Traditional Chinese format
+    formattedString = @"已鎖了"; // Begin formatting string
 
   	// Do all of the formatting stuff by appending the string
   	if(yearCount > 0) {
@@ -531,9 +531,46 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   		formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
   	else
   		formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
-
-  	formattedString = [formattedString stringByAppendingFormat: @" 前"]; // Append "ago" to the string
   }
+	else if([language isEqualToString: @"cn"]) { // Simplified Chinese format
+		formattedString = @"已锁了"; // Begin formatting string
+
+		// Do all of the formatting stuff by appending the string
+		if(yearCount > 0) {
+			if(yearCount == 1)
+				formattedString = [formattedString stringByAppendingFormat: @" %ld年", (long)yearCount];
+			else
+				formattedString = [formattedString stringByAppendingFormat: @" %ld年", (long)yearCount];
+		}
+		if(monthCount > 0) {
+			if(monthCount == 1)
+				formattedString = [formattedString stringByAppendingFormat: @" %ld个月", (long)monthCount];
+			else
+				formattedString = [formattedString stringByAppendingFormat: @" %ld个月", (long)monthCount];
+		}
+		if(dayCount > 0) {
+			if(dayCount == 1)
+				formattedString = [formattedString stringByAppendingFormat: @" %ld天", (long)dayCount];
+			else
+				formattedString = [formattedString stringByAppendingFormat: @" %ld天", (long)dayCount];
+		}
+		if(hourCount > 0) {
+			if(hourCount == 1)
+				formattedString = [formattedString stringByAppendingFormat: @" %ld小时", (long)hourCount];
+			else
+				formattedString = [formattedString stringByAppendingFormat: @" %ld小时", (long)hourCount];
+		}
+		if(minuteCount > 0) {
+			if(minuteCount == 1)
+				formattedString = [formattedString stringByAppendingFormat: @" %ld分", (long)minuteCount];
+			else
+				formattedString = [formattedString stringByAppendingFormat: @" %ld分", (long)minuteCount];
+		}
+		if(secondCount == 0 || secondCount == 1)
+			formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
+		else
+			formattedString = [formattedString stringByAppendingFormat: @" %ld秒", (long)secondCount];
+	}
   else { // English format (default)
     formattedString = @"Locked"; // Begin formatting string
 
@@ -610,7 +647,7 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 - (void)loadView {
 	%orig; // Call original "loadView" method
-  lastLocked = [[NSDate date] retain]; // Set the lastLocked NSDate to the current date
+  lastLocked = [[NSDate dateWithTimeIntervalSinceNow: -5000000] retain]; // Set the lastLocked NSDate to the current date
   if([dontationAlertSettings integerForKey: @"unlockCount"] == 15) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enjoying my tweak, LastLocked?" message:@"Please consider donating so I can continue to develop tweaks like this! -NeinZedd9 <3" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Donate", nil];
     [alert show];
