@@ -1,10 +1,10 @@
 #import "version.h"
+#import <sys/utsname.h>
 
 static NSDate *lastLocked; // Static variable that holds the NSDate of the last locked time
 static NSTimer *updateEverySecond;
 static NSUserDefaults *dontationAlertSettings;
 static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] substringToIndex:2];
-
 
 @interface NZ9TimeFormat : NSObject
 
@@ -618,6 +618,36 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 @end
 
+%group iOS11X
+
+@interface SBUILegibilityLabel : UIView
+@property (nonatomic, assign, readwrite) NSString *string;
+@end
+
+@interface SBDashBoardTeachableMomentsContainerView
+@property (nonatomic, assign, readwrite) SBUILegibilityLabel *callToActionLabel;
+@end
+
+%hook SBDashBoardTeachableMomentsContainerView
+
+- (id)init {
+  %orig;
+  updateEverySecond = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateLastLocked) userInfo:nil repeats:YES];
+  return self;
+}
+
+%new
+- (void)updateLastLocked {
+  NSString *newString = [NZ9TimeFormat nz9_lastLockedTimeFormat];
+  self.callToActionLabel.string = newString; //Gang
+  CGRect frame = self.callToActionLabel.frame;
+  self.callToActionLabel.frame = CGRectMake(frame.origin.x, frame.origin.y, [UIScreen mainScreen].bounds.size.width, frame.size.height); //Set frame so you can actually see stuff
+  self.callToActionLabel.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2, self.callToActionLabel.center.y); //Center text
+}
+
+%end
+%end
+
 %group iOS10
 %hook SBUICallToActionLabel // "Hook" the SBUICallToActionLabel class to change pre-existing methods
 
@@ -645,9 +675,9 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 %hook SBDashBoardViewController
 
-- (void)loadView {
-	%orig; // Call original "loadView" method
-  lastLocked = [[NSDate dateWithTimeIntervalSinceNow: -5000000] retain]; // Set the lastLocked NSDate to the current date
+- (void)viewDidAppear:(BOOL)animated {
+	%orig(); // Call original "viewDidAppear:" method
+  lastLocked = [[NSDate date] retain]; // Set the lastLocked NSDate to the current date
   if([dontationAlertSettings integerForKey: @"unlockCount"] == 15) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enjoying my tweak, LastLocked?" message:@"Please consider donating so I can continue to develop tweaks like this! -NeinZedd9 <3" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:@"Donate", nil];
     [alert show];
@@ -713,6 +743,13 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   [dontationAlertSettings registerDefaults:@{
     @"unlockCount": @0
   }];
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  NSString *device = @(systemInfo.machine);
+  // X Devices
+  if([device isEqualToString:@"iPhone10,3"] || [device isEqualToString:@"iPhone11,2"] || [device isEqualToString:@"iPhone11,4"] || [device isEqualToString:@"iPhone11,8"]) {
+    %init(iOS11X);
+  }
 	if(IS_IOS_OR_NEWER(iOS_10_0)) {
 		%init(iOS10);
 	}
