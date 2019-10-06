@@ -1,5 +1,4 @@
 #import "version.h"
-#import <sys/utsname.h>
 
 static NSDate *lastLocked; // Static variable that holds the NSDate of the last locked time
 static NSTimer *updateEverySecond;
@@ -10,6 +9,11 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
 
 + (NSString *)nz9_lastLockedTimeFormat; // Class method that will be used to format the time string
 
+@end
+
+@interface BSPlatform : NSObject
++ (id)sharedInstance;
+- (long long)homeButtonType;
 @end
 
 @implementation NZ9TimeFormat : NSObject
@@ -743,11 +747,8 @@ static NSString *language = [[[NSLocale preferredLanguages] objectAtIndex:0] sub
   [dontationAlertSettings registerDefaults:@{
     @"unlockCount": @0
   }];
-  struct utsname systemInfo;
-  uname(&systemInfo);
-  NSString *device = @(systemInfo.machine);
-  // X Devices
-  if([device isEqualToString:@"iPhone10,3"] || [device isEqualToString:@"iPhone11,2"] || [device isEqualToString:@"iPhone11,4"] || [device isEqualToString:@"iPhone11,8"]) {
+  BSPlatform *platform = [NSClassFromString(@"BSPlatform") sharedInstance];
+  if (platform.homeButtonType == 2) {
     %init(iOS11X);
   }
 	if(IS_IOS_OR_NEWER(iOS_10_0)) {
